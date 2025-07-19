@@ -17,10 +17,10 @@ class Address extends Model
         'street_address',
         'city',
         'state',
-        'zipcode'
+        'zip_code'
     ];
 
-    public function order(): BelongsTo {
-        return $this->belongsTo(Order::class);
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
     }
 }
