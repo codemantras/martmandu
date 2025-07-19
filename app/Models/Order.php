@@ -11,8 +11,9 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $attributes = [
+    protected $fillable = [
         'user_id',
+        'address_id',
         'grand_total',
         'payment_method',
         'payment_status',
@@ -20,7 +21,8 @@ class Order extends Model
         'currency',
         'shipping_amount',
         'shipping_method',
-        'notes',];
+        'notes'
+    ];
 
     public function user(): BelongsTo
     {
@@ -29,5 +31,10 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
     }
 }
