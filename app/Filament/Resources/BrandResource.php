@@ -7,7 +7,6 @@ use App\Filament\Resources\BrandResource\Pages\EditBrand;
 use App\Filament\Resources\BrandResource\Pages\ListBrands;
 use App\Filament\Resources\BrandResource\Pages\ViewBrand;
 use App\Models\Brand;
-use App\Models\Category;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
