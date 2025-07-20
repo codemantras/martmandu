@@ -2,15 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages\CreateCategory;
-use App\Filament\Resources\CategoryResource\Pages\EditCategory;
-use App\Filament\Resources\CategoryResource\Pages\ListCategories;
-use App\Filament\Resources\CategoryResource\Pages\ViewCategory;
-use App\Models\Category;
+use App\Filament\Resources\BrandResource\Pages\CreateBrand;
+use App\Filament\Resources\BrandResource\Pages\EditBrand;
+use App\Filament\Resources\BrandResource\Pages\ListBrands;
+use App\Filament\Resources\BrandResource\Pages\ViewBrand;
+use App\Models\Brand;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -23,14 +24,13 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-class CategoryResource extends Resource
+class BrandResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Brand::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -51,12 +51,12 @@ class CategoryResource extends Resource
                                 ->disabled()
                                 ->required()
                                 ->dehydrated()
-                                ->unique(Category::class, 'slug', ignoreRecord: true),
+                                ->unique(Brand::class, 'slug', ignoreRecord: true),
                             RichEditor::make('description')
                                 ->columnSpanFull(),
                         ]),
                     FileUpload::make('image')
-                        ->directory('categories')
+                        ->directory('brands')
                         ->image(),
                     Toggle::make('is_active')
                         ->required()
@@ -112,10 +112,10 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCategories::route('/'),
-            'create' => CreateCategory::route('/create'),
-            'edit' => EditCategory::route('/{record}/edit'),
-            'view' => ViewCategory::route('/{record}'),
+            'index' => ListBrands::route('/'),
+            'create' => CreateBrand::route('/create'),
+            'edit' => EditBrand::route('/{record}/edit'),
+            'view' => ViewBrand::route('/{record}'),
         ];
     }
 }
