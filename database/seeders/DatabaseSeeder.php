@@ -58,14 +58,11 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         // Orders
-        foreach (range(1, 20) as $i) {
+        foreach (range(1, rand(1, 10)) as $i) {
             $user = $users->random();
             $address = $user->addresses()->inRandomOrder()->first();
 
-            $order = Order::factory()->create([
-                'user_id' => $user->id,
-                'address_id' => $address->id,
-            ]);
+            $order = Order::factory()->for($user)->for($address)->create();
 
             // Add random items to the order
             $itemsCount = rand(1, 3);
@@ -77,9 +74,10 @@ class DatabaseSeeder extends Seeder
                 $unitPrice = $product->price;
                 $itemTotal = $unitPrice * $quantity;
 
-                OrderItem::factory()->create([
-                    'order_id' => $order->id,
-                    'product_id' => $product->id,
+                OrderItem::factory()
+                    ->for($product)
+                    ->for($order)
+                    ->create([
                     'quantity' => $quantity,
                     'unit_price' => $unitPrice,
                     'total_price' => $itemTotal,

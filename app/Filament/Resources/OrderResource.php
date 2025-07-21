@@ -49,6 +49,7 @@ class OrderResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Order Management';
+
     protected static ?int $navigationSort = 1;
 
 
@@ -128,33 +129,6 @@ class OrderResource extends Resource
                                     ->columnSpanFull(),
                                 TextArea::make('notes')
                                     ->columnSpanFull()
-                            ])
-                            ->columns(2),
-                        Section::make('Shipping Address')
-                            ->schema([
-                                TextInput::make('name')
-                                    ->maxLength(255)
-                                    ->required(),
-                                TextInput::make('phone')
-                                    ->tel()
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('email')
-                                    ->email()
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('street_address')
-                                    ->maxLength(255)
-                                    ->required(),
-                                TextInput::make('city')
-                                    ->maxLength(255)
-                                    ->required(),
-                                TextInput::make('state')
-                                    ->maxLength(255)
-                                    ->required(),
-                                TextInput::make('zip_code')
-                                    ->maxLength(255)
-                                    ->required(),
                             ])
                             ->columns(2),
                         Section::make('Order Items')
@@ -291,6 +265,12 @@ class OrderResource extends Resource
             //
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->orderByDesc('created_at');
+    }
+
 
     public static function getPages(): array
     {
