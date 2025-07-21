@@ -232,7 +232,11 @@ class OrderResource extends Resource
                         'completed' => 'Completed',
                         'cancelled' => 'Cancelled',
                     ]),
-
+                TextColumn::make('address.full_address')
+                    ->label('Shipping Address')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -271,6 +275,16 @@ class OrderResource extends Resource
         return parent::getEloquentQuery()->orderByDesc('created_at');
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereIn('status', ['new', 'pending', 'processing'])->count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        $pendingOrderCount = static::getModel()::whereIn('status', ['new', 'pending', 'processing'])->count();
+        return $pendingOrderCount < 10 ? "success" : "danger";
+    }
 
     public static function getPages(): array
     {
