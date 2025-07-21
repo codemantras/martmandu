@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Pages\ListOrders;
@@ -11,7 +10,6 @@ use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Product;
-use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -20,13 +18,11 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -37,10 +33,6 @@ use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Number;
-use Illuminate\Support\Str;
 
 class OrderResource extends Resource
 {
@@ -277,13 +269,17 @@ class OrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::whereIn('status', ['new', 'pending', 'processing'])->count();
+        return (string) self::getPendingOrderCount();
     }
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        $pendingOrderCount = static::getModel()::whereIn('status', ['new', 'pending', 'processing'])->count();
-        return $pendingOrderCount < 10 ? "success" : "danger";
+        return self::getPendingOrderCount() < 10 ? 'success' : 'danger';
+    }
+
+    private static function getPendingOrderCount(): int
+    {
+        return static::getModel()::whereIn('status', ['new', 'pending', 'processing'])->count();
     }
 
     public static function getPages(): array

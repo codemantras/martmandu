@@ -6,7 +6,7 @@ use App\Models\Order;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class OderStatus extends BaseWidget
+class OrderStatus extends BaseWidget
 {
     protected function getStats(): array
     {
@@ -20,8 +20,12 @@ class OderStatus extends BaseWidget
 
     protected function buildStat(string $label, array $statuses, string $color, string $icon = 'heroicon-o-shopping-cart'): Stat
     {
-        $count = Order::whereIn('status', $statuses)->count();
-        $total = number_format(Order::whereIn('status', $statuses)->sum('grand_total'), 2);
+        $result = Order::whereIn('status', $statuses)
+            ->selectRaw('count(*) as count, sum(grand_total) as total')
+            ->first();
+
+        $count = $result->count ?? 0;
+        $total = number_format($result->total ?? 0, 2);
 
         return Stat::make($label, "Rs. {$total}")
             ->color($color)

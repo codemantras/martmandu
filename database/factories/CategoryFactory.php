@@ -24,7 +24,7 @@ class CategoryFactory extends Factory
         $imageFiles = FacadeFile::files(base_path('database/factories/images/categories'));
         $selectedImage = collect($imageFiles)->random();
 
-        $storedPath =Storage::disk('public')->putFile('public/categories',  new File($selectedImage->getRealPath()));
+        $storedPath =Storage::disk('public')->putFile('categories',  new File($selectedImage->getRealPath()));
         $name = $this->faker->word();
 
         return [

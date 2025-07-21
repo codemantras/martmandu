@@ -3,9 +3,7 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
-use App\Filament\Resources\OrderResource\Widgets\OderStatus;
-use App\Models\Order;
-use Filament\Actions;
+use App\Filament\Resources\OrderResource\Widgets\OrderStatus;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
@@ -21,7 +19,7 @@ class ListOrders extends ListRecords
 
     protected function getHeaderWidgets(): array
     {
-        return [OderStatus::class];
+        return [OrderStatus::class];
     }
 
     public function getTabs(): array

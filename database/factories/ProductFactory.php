@@ -32,7 +32,7 @@ class ProductFactory extends Factory
         $selectedImage = collect($localFiles)->random();
 
         // 📥 Copy image into public storage
-        $storedPath = Storage::disk('public')->putFile('public/products', new File($selectedImage->getRealPath()));
+        $storedPath = Storage::disk('public')->putFile('products', new File($selectedImage->getRealPath()));
 
         return [
             'brand_id' => Brand::factory(),
