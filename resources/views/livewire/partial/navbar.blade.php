@@ -34,7 +34,7 @@
                         @include('components.navLink', ['link'=> route('home'), 'name'=> 'Home'])
                         @include('components.navLink', ['link'=> route('categories'), 'name'=> 'Categories'])
                         @include('components.navLink', ['link'=> route('products'), 'name'=> 'Products'])
-                        <a wire:navigate class="font-medium flex items-center {{request()->fullUrl() === route('cart') ? 'text-blue-600 dark:text-blue-500 ' : 'text-gray-500 dark:text-gray-400' }}  hover:text-gray-400 py-3 md:py-6  dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        <a wire:navigate class="font-medium flex items-center {{request()->url() === route('cart') ? 'text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-600 ' : 'text-gray-500 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-500 ' }}   py-3 md:py-6   dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                            href="{{route('cart')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="flex-shrink-0 w-5 h-5 mr-1">
@@ -73,7 +73,7 @@
                           <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
                             My Account
                           </a>
-                          <a wire:navigate class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                          <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
                             Logout
                           </a>
                         </div>
