@@ -44,6 +44,7 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $recordTitleAttribute = 'id';
 
     public static function form(Form $form): Form
     {
@@ -278,6 +279,11 @@ class OrderResource extends Resource
     private static function getPendingOrderCount(): int
     {
         return static::getModel()::whereIn('status', ['new', 'pending', 'processing'])->count();
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['user.name'];
     }
 
     public static function getPages(): array
