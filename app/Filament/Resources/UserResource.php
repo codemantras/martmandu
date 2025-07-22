@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Filament\Resources\UserResource\Pages\ViewUser;
+use App\Filament\Resources\UserResource\RelationManagers\OrdersRelationManager;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Pages\Page;
@@ -30,6 +31,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Customer Management';
     protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
@@ -92,8 +95,13 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+           OrdersRelationManager::class
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
     }
 
     public static function getPages(): array

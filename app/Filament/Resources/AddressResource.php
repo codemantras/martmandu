@@ -29,7 +29,10 @@ class AddressResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Customer Management';
+
     protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
@@ -103,6 +106,11 @@ class AddressResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
     }
 
     public static function getPages(): array
