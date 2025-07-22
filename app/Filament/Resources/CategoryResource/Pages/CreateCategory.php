@@ -13,15 +13,15 @@ class CreateCategory extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->previousUrl ?? $this->getResource()::getUrl('view');
+        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
     }
 
 
-    protected function getCreatedNotification(): ?Notification
-    {
-        return Notification::make()
-            ->success()
-            ->title('User registered')
-            ->body('The user has been created successfully.');
-    }
+//    protected function getCreatedNotification(): ?Notification
+//    {
+//        return Notification::make()
+//            ->success()
+//            ->title('User registered')
+//            ->body('The user has been created successfully.');
+//    }
 }
