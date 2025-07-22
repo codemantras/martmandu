@@ -2,16 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AddressResource\Pages;
+use App\Filament\Resources\AddressResource\Pages\CreateAddress;
+use App\Filament\Resources\AddressResource\Pages\EditAddress;
+use App\Filament\Resources\AddressResource\Pages\ListAddresses;
+use App\Filament\Resources\AddressResource\Pages\ViewAddress;
 use App\Filament\Resources\AddressResource\RelationManagers;
 use App\Models\Address;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AddressResource extends Resource
 {
@@ -26,21 +35,21 @@ class AddressResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
+                Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('phone')
+                TextInput::make('name'),
+                TextInput::make('phone')
                     ->tel(),
-                Forms\Components\TextInput::make('email')
+                TextInput::make('email')
                     ->email(),
-                Forms\Components\Textarea::make('street_address')
+                Textarea::make('street_address')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('landmark')
+                Textarea::make('landmark')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('city'),
-                Forms\Components\TextInput::make('state'),
-                Forms\Components\TextInput::make('zip_code'),
+                TextInput::make('city'),
+                TextInput::make('state'),
+                TextInput::make('zip_code'),
             ]);
     }
 
@@ -48,26 +57,26 @@ class AddressResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+               TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+               TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
+               TextColumn::make('phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+               TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('city')
+               TextColumn::make('city')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('state')
+               TextColumn::make('state')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('zip_code')
+               TextColumn::make('zip_code')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+               TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+               TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -76,12 +85,15 @@ class AddressResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    EditAction::make(),
+                    ViewAction::make(),
+                    DeleteAction::make()
+                ])
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -96,10 +108,10 @@ class AddressResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAddresses::route('/'),
-            'create' => Pages\CreateAddress::route('/create'),
-            'view' => Pages\ViewAddress::route('/{record}'),
-            'edit' => Pages\EditAddress::route('/{record}/edit'),
+            'index' => ListAddresses::route('/'),
+            'create' => CreateAddress::route('/create'),
+            'view' => ViewAddress::route('/{record}'),
+            'edit' => EditAddress::route('/{record}/edit'),
         ];
     }
 }

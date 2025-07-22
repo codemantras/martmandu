@@ -140,7 +140,7 @@ class OrderResource extends Resource
                                             ->afterStateUpdated(function ($state, Set $set, Get $get) {
                                                 $unite_price = Product::find($state)?->price ?? 0;
                                                 $set('unite_price', $unite_price);
-                                                $set('total_amount', $unite_price * $get('quantity'));
+                                                $set('total_price', $unite_price * $get('quantity'));
                                             }),
                                         TextInput::make('quantity')
                                             ->numeric()
@@ -149,9 +149,7 @@ class OrderResource extends Resource
                                             ->minValue(1)
                                             ->columnSpan(2)
                                             ->reactive()
-                                            ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                                                $set('total_amount', $state * $get('unite_price'));
-                                            }),
+                                            ->afterStateUpdated(fn($state, Set $set, Get $get) => $set('total_price', $state * $get('unite_price'))),
                                         TextInput::make('unite_price')
                                             ->numeric()
                                             ->required()
@@ -159,7 +157,7 @@ class OrderResource extends Resource
                                             ->dehydrated()
                                             ->default(0)
                                             ->columnSpan(3),
-                                        TextInput::make('total_amount')
+                                        TextInput::make('total_price')
                                             ->numeric()
                                             ->required()
                                             ->disabled()
@@ -269,7 +267,7 @@ class OrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) self::getPendingOrderCount();
+        return (string)self::getPendingOrderCount();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

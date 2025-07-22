@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\AddressResource\Pages;
 
 use App\Filament\Resources\AddressResource;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewAddress extends ViewRecord
@@ -13,7 +13,7 @@ class ViewAddress extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            EditAction::make(),
         ];
     }
 }
