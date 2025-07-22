@@ -4,17 +4,11 @@ namespace App\Filament\Resources\UserResource\RelationManagers;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
-use Filament\Forms;
-
-//use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrdersRelationManager extends RelationManager
 {
@@ -68,7 +62,7 @@ class OrdersRelationManager extends RelationManager
             ->headerActions([
             ])
             ->actions([
-                Action::make('View  Order')
+                Action::make('View Order')
                     ->url(fn(Order $record): string => OrderResource::getUrl('view', ['record' => $record])),
             ])
             ->bulkActions([
