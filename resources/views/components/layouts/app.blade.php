@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ $title ?? env('APP_NAME') }}</title>
+    <title>{{ $title ?? config("app.name") }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js' ])
     @livewireStyles
 </head>
 <body>
-@livewire("partial.navbar")
+<livewire:partial.navbar />
 <main class="bg-slate-200 dark:bg-slate-700">
     {{ $slot }}
 </main>
-@livewire("partial.footer")
+<livewire:partial.footer />
 @livewireScripts
 </body>
 </html>

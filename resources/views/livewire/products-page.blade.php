@@ -111,7 +111,7 @@
                         <div class="w-full px-3 mb-6 sm:w-1/2 md:w-1/3">
                             <div class="border border-gray-300 dark:border-gray-700">
                                 <div class="relative bg-gray-200">
-                                    <a href="{{route('products.detail',['product'=> 'one'])}}" class="">
+                                    <a href="{{route('products.show',['product'=> 'one'])}}" class="">
                                         <img src="https://i.postimg.cc/hj6h6Vwv/pexels-artem-beliaikin-2292919.jpg" alt="" class="object-cover w-full h-56 mx-auto ">
                                     </a>
                                 </div>
