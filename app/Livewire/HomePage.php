@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class HomePage extends Component
 {
-    public function render(): View|Application|Factory
+    public function render(): View|Application
     {
         return view('livewire.home-page');
     }
