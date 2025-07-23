@@ -33,6 +33,7 @@
                     <div class="flex flex-col gap-x-0 mt-5 divide-y divide-dashed divide-gray-200 md:flex-row md:items-center md:justify-end md:gap-x-7 md:mt-0 md:ps-7 md:divide-y-0 md:divide-solid dark:divide-gray-700">
                         @include('components.navLink', ['link'=> route('home'), 'name'=> 'Home'])
                         @include('components.navLink', ['link'=> route('categories'), 'name'=> 'Categories'])
+                        @include('components.navLink', ['link'=> route('brands'), 'name'=> 'Brands'])
                         @include('components.navLink', ['link'=> route('products'), 'name'=> 'Products'])
                         <a wire:navigate class="font-medium flex items-center {{request()->url() === route('cart') ? 'text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-600 ' : 'text-gray-500 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-500 ' }}   py-3 md:py-6   dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                            href="{{route('cart')}}">
