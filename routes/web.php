@@ -1,6 +1,5 @@
 <?php
 
-use App\Livewire\BrandDetailPage;
 use App\Livewire\BrandPage;
 use App\Livewire\CancelPage;
 use App\Livewire\CartPage;
@@ -19,11 +18,8 @@ use App\Livewire\SuccessPage;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class)->name('home');
-Route::get('/categories', CategoriesPage::class)->name('categories');
-Route::get('/categories/{category:slug}', CategoriesPage::class)->name('categories.show');
-
 Route::get('/brands', BrandPage::class)->name('brands');
-Route::get('/brands/{brand:slug}', BrandDetailPage::class)->name('brands.show');
+Route::get('/categories', CategoriesPage::class)->name('categories');
 
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/products/{product:slug}', ProductDetailPage::class)->name('products.show');

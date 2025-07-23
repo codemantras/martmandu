@@ -27,7 +27,7 @@ class ProductsPage extends Component
 
     public function render(): View|Application
     {
-        $products = $this->filteredProducts()->paginate(9);
+        $products = $this->filteredProducts(Product::active())->paginate(9);
 
         return view('livewire.products-page')
             ->with([
@@ -38,45 +38,29 @@ class ProductsPage extends Component
             ->title('Products - ' . config('app.name'));
     }
 
-    protected function filteredProducts(): Builder
+    protected function filteredProducts(Builder $products): Builder
     {
-        $query = Product::active();
-
         if ($this->selected_brand) {
-            $query->whereIn('brand_id', $this->selectedBrandIds());
+            $products->whereHas('brand', fn ($query) => $query->whereIn('slug', $this->selected_brand));
         }
 
         if ($this->selected_category) {
-            $query->whereIn('category_id', $this->selectedCategoryIds());
+            $products->whereHas('category', fn ($query) => $query->whereIn('slug', $this->selected_category));
         }
 
         if ($this->featured) {
-            $query->where('is_featured', $this->featured);
+            $products->is_featured();
         }
 
         if ($this->sale) {
-            $query->where('on_sale', $this->sale);
+            $products->on_sale();
         }
 
         if ($this->price_range) {
-            $query->whereBetween('price', [0, $this->price_range]);
+            $products->whereBetween('price', [0, $this->price_range]);
         }
 
-        return $query;
-    }
-
-    protected function selectedBrandIds(): Collection
-    {
-        return Brand::active()
-            ->whereIn('slug', $this->selected_brand)
-            ->pluck('id');
-    }
-
-    protected function selectedCategoryIds(): Collection
-    {
-        return Category::active()
-            ->whereIn('slug', $this->selected_category)
-            ->pluck('id');
+        return $products;
     }
 
     protected function activeCategories(): Collection

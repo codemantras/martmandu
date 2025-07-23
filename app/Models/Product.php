@@ -51,19 +51,19 @@ class Product extends Model
     }
 
     #[Scope]
-    protected function featured(Builder $query): Builder
+    protected function is_featured(Builder $query): Builder
     {
         return $query->where('is_featured', true);
     }
 
     #[Scope]
-    protected function stock(Builder $query): Builder
+    protected function in_stock(Builder $query): Builder
     {
         return $query->where('is_stock', true);
     }
 
     #[Scope]
-    protected function sale(Builder $query): Builder
+    protected function on_sale(Builder $query): Builder
     {
         return $query->where('on_sale', true);
     }

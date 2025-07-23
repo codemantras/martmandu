@@ -11,9 +11,9 @@ class ProductDetailPage extends Component
 {
     public string $slug;
 
-    public function mount(string $product): string
+    public function mount(string $product): void
     {
-        return $this->slug = $product;
+        $this->slug = $product;
     }
 
     public function render(): View|Application
@@ -21,6 +21,6 @@ class ProductDetailPage extends Component
         $product = Product::where('slug', $this->slug)->firstOrFail();
         return view('livewire.product-detail-page')
             ->with(compact('product'))
-            ->title('Product Detail' . config('app.name'));
+            ->title('Product Detail - ' . config('app.name'));
     }
 }
