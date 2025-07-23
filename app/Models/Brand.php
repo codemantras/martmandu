@@ -30,5 +30,4 @@ class Brand extends Model
     {
         return $query->where('is_active', 1);
     }
-
 }
