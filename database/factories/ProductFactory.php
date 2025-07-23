@@ -38,7 +38,7 @@ class ProductFactory extends Factory
             'category_id' => Category::factory(),
             'name' => $name,
             'slug' => Str::slug($name),
-            'images' => json_encode([$storedPath]),
+            'images' => [$storedPath],
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'is_active' => true,

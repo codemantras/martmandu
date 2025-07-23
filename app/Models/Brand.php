@@ -28,6 +28,6 @@ class Brand extends Model
     #[Scope]
     protected function active(Builder $query): Builder
     {
-        return $query->where('is_active', 1);
+        return $query->where('is_active', true);
     }
 }

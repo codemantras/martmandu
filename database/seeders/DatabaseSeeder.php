@@ -50,11 +50,8 @@ class DatabaseSeeder extends Seeder
 
         // Products
         $products = Product::factory()
-            ->count(10)
-            ->state(fn() => [
-                'brand_id' => $brands->random()->id,
-                'category_id' => $categories->random()->id,
-            ])
+            ->count(rand(10, 100))
+            ->state(fn() => ['brand_id' => $brands->random()->id, 'category_id' => $categories->random()->id,])
             ->create();
 
         // Orders
@@ -88,5 +85,6 @@ class DatabaseSeeder extends Seeder
 
             $order->update(['grand_total' => $total]);
         }
+
     }
 }
