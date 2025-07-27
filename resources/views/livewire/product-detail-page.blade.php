@@ -63,12 +63,12 @@
                         </div>
                         <div class="flex flex-wrap items-center gap-4">
                             @if(CartManagement::checkItemExists($product->id))
-                                <button wire:click="removeProductToCart({{$product->id}})"
+                                <button wire:click="removeProductFromCart({{$product->id}})"
                                         class="w-full p-4 bg-red-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-700 cursor-pointer">
-                                    <span wire:loading.remove wire:target="removeProductToCart({{$product->id}})">
+                                    <span wire:loading.remove wire:target="removeProductFromCart({{$product->id}})">
                                         Remove from Cart
                                     </span>
-                                    <span wire:loading wire:target="removeProductToCart({{$product->id}})">
+                                    <span wire:loading wire:target="removeProductFromCart({{$product->id}})">
                                         Removing from Cart...
                                     </span>
                                 </button>

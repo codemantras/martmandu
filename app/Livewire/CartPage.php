@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
-use function json_encode;
 
 class CartPage extends Component
 {
@@ -29,10 +28,6 @@ class CartPage extends Component
 
     public function decreaseQuantity(int $product_id): void
     {
-        $cart_item=CartManagement::getCartItem($product_id);
-        if($cart_item){
-
-        }
         $this->cart_items=CartManagement::decrementQuantityToCartItem($product_id);
         $this->grand_total = CartManagement::cartItemGrandTotal($this->cart_items);
     }

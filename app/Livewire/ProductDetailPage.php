@@ -6,7 +6,6 @@ use App\Class\CartManagement;
 use App\Livewire\Partial\Navbar;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
@@ -35,16 +34,10 @@ class ProductDetailPage extends Component
             CartManagement::decrementQuantityToCartItem($this->getProduct($this->slug)->id);
         }
     }
-
-    public function removeProduct(): void
-    {
-        Log::info("Removing product from cart");
-    }
-
     public function addProductToCart(int $product_id): void
     {
-        $total_items = CartManagement::addItemToCart($product_id, $this->quantity);
-        $this->dispatch('cart-updated', total_items: $total_items)->to(Navbar::class);
+        $cart_items = CartManagement::addItemToCart($product_id, $this->quantity);
+        $this->dispatch('cart-updated', total_items: count($cart_items))->to(Navbar::class);
         LivewireAlert::title('Product added to cart successfully!')
             ->position('bottom-end')
             ->toast()
@@ -61,7 +54,7 @@ class ProductDetailPage extends Component
             ->title('Product Detail - ' . config('app.name'));
     }
 
-    public function removeProductToCart($product_id): void
+    public function removeProductFromCart($product_id): void
     {
         $cart_items = CartManagement::removeItemFromCart($product_id);
         $this->dispatch('cart-updated', total_items: count($cart_items))->to(Navbar::class);
@@ -74,8 +67,8 @@ class ProductDetailPage extends Component
 
     }
 
-//    private function getProduct(string $product_slug): Product
-//    {
-//        return Product::where('slug', $this->slug)->firstOrFail();
-//    }
+    private function getProduct(string $product_slug): Product
+    {
+        return Product::where('slug', $product_slug)->firstOrFail();
+    }
 }

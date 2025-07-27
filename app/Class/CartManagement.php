@@ -14,9 +14,9 @@ class CartManagement
      * Add item to cart
      * @param int $product_id
      * @param int $quantity
-     * @return int
+     * @return array
      */
-    public static function addItemToCart(int $product_id, int $quantity = 1): int
+    public static function addItemToCart(int $product_id, int $quantity = 1): array
     {
         Log::info("Product_id #{$product_id}, Quantity #{$quantity} added");
         $cart_items = self::getCartItemsFromCookie();
@@ -39,7 +39,7 @@ class CartManagement
         }
 
         self::addItemsToCookies($cart_items);
-        return count($cart_items);
+        return $cart_items;
     }
 
     /**

@@ -34,7 +34,7 @@ class ProductsPage extends Component
     {
         $total_items = CartManagement::addItemToCart($product_id);
         $this->dispatch('cart-updated', total_items: $total_items)->to(Navbar::class);
-        LivewireAlert::title('Product added to card successfully!')
+        LivewireAlert::title('Product added to cart successfully!')
             ->toast()
             ->success()
             ->timer(3000)
