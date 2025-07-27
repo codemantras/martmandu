@@ -20,7 +20,7 @@ class CartManagement
     {
         Log::info("Product_id #{$product_id}, Quantity #{$quantity} added");
         $cart_items = self::getCartItemsFromCookie();
-        $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
+        $product_key = (new self())->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
             $cart_items[$product_key]['quantity'] = $quantity;
             $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unit_price'];
@@ -50,7 +50,7 @@ class CartManagement
     public static function removeItemFromCart(int $product_id): array
     {
         $cart_items = self::getCartItemsFromCookie();
-        $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
+        $product_key = (new self())->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
             $cart_items = array_values(Arr::except($cart_items, $product_key));
         }
@@ -97,7 +97,7 @@ class CartManagement
     public static function incrementQuantityToCartItem(int $product_id): array
     {
         $cart_items = self::getCartItemsFromCookie();
-        $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
+        $product_key = (new self())->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
             $cart_items[$product_key]['quantity']++;
             $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unit_price'];
@@ -114,7 +114,7 @@ class CartManagement
     public static function decrementQuantityToCartItem(int $product_id): array
     {
         $cart_items = self::getCartItemsFromCookie();
-        $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
+        $product_key = (new self())->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
             if ($cart_items[$product_key]['quantity'] > 1) {
                 $cart_items[$product_key]['quantity']--;
@@ -156,7 +156,7 @@ class CartManagement
     public static function getCartItem(int $product_id): array
     {
         $cart_items = self::getCartItemsFromCookie();
-        $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
+        $product_key = (new self())->getItemIndex($cart_items, $product_id);
         return $product_key !== false ? $cart_items[$product_key] : [];
     }
 
@@ -168,7 +168,7 @@ class CartManagement
     public static function checkItemExists(int $product_id): bool
     {
         $cart_items = self::getCartItemsFromCookie();
-        $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
+        $product_key = (new self())->getItemIndex($cart_items, $product_id);
         return $product_key !== false;
     }
 }

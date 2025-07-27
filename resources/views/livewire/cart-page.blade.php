@@ -24,7 +24,7 @@
                                         <span class="font-semibold">{{$item['name']}}</span>
                                     </div>
                                 </td>
-                                <td class="py-4">{{$item['unit_price']}}</td>
+                                <td class="py-4">{{Number::currency($item['unit_price'], in: 'usd')}}</td>
                                 <td class="py-4">
                                     <div class="flex items-center">
                                         <button class="border rounded-md py-2 px-4 mr-2" wire:click.prevent="decreaseQuantity({{$item['product_id']}})">-</button>
@@ -33,7 +33,7 @@
                                     </div>
                                 </td>
                                 <td class="py-4">
-                                    {{$item['total_price']}}
+                                    {{Number::currency($item['total_price'], in: 'usd')}}
                                 </td>
                                 <td>
                                     <button wire:click.prevent="removeItemFromCart({{$item['product_id']}})"
@@ -61,7 +61,7 @@
                     <h2 class="text-lg font-semibold mb-4">Summary</h2>
                     <div class="flex justify-between mb-2">
                         <span>Subtotal</span>
-                        <span>${{$grand_total}}</span>
+                        <span>{{Number::currency($grand_total, in: 'usd')}}</span>
                     </div>
                     <div class="flex justify-between mb-2">
                         <span>Taxes</span>
@@ -74,9 +74,9 @@
                     <hr class="my-2">
                     <div class="flex justify-between mb-2">
                         <span class="font-semibold">Total</span>
-                        <span class="font-semibold">${{$grand_total}}</span>
+                        <span class="font-semibold">{{Number::currency($grand_total, in: 'usd')}}</span>
                     </div>
-                    @if(@$cart_items)
+                    @if($cart_items)
                     <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
                     @endif
                 </div>
