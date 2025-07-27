@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Class\CartManagement;
+use App\Livewire\Partial\Navbar;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -9,6 +11,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,6 +27,20 @@ class ProductsPage extends Component
     public bool $featured = false, $sale = false;
     #[Url]
     public int $price_range = 3000;
+    #[Url]
+    public string $sort = 'latest';
+
+    public function addProductToCart(int $product_id): void
+    {
+        $total_items = CartManagement::addItemToCart($product_id);
+        $this->dispatch('cart-updated', total_items: $total_items)->to(Navbar::class);
+        LivewireAlert::title('Product added to cart successfully!')
+            ->toast()
+            ->success()
+            ->timer(3000)
+            ->position('bottom-end')
+            ->show();
+    }
 
     public function render(): View|Application
     {
@@ -40,27 +57,14 @@ class ProductsPage extends Component
 
     protected function filteredProducts(Builder $products): Builder
     {
-        if ($this->selected_brand) {
-            $products->whereHas('brand', fn ($query) => $query->whereIn('slug', $this->selected_brand));
-        }
-
-        if ($this->selected_category) {
-            $products->whereHas('category', fn ($query) => $query->whereIn('slug', $this->selected_category));
-        }
-
-        if ($this->featured) {
-            $products->is_featured();
-        }
-
-        if ($this->sale) {
-            $products->on_sale();
-        }
-
-        if ($this->price_range) {
-            $products->whereBetween('price', [0, $this->price_range]);
-        }
-
-        return $products;
+        return $products
+            ->when($this->selected_brand, fn($query) => $query->whereHas('brand', fn($q) => $q->whereIn('slug', $this->selected_brand)))
+            ->when($this->selected_category, fn($query) => $query->whereHas('category', fn($q) => $q->whereIn('slug', $this->selected_category)))
+            ->when($this->featured, fn($query) => $query->is_featured())
+            ->when($this->sale, fn($query) => $query->on_sale())
+            ->when($this->price_range, fn($query) => $query->whereBetween('price', [0, $this->price_range]))
+            ->when($this->sort === 'latest', fn($query) => $query->latest())
+            ->when($this->sort === 'price', fn($query) => $query->orderBy('price'));
     }
 
     protected function activeCategories(): Collection

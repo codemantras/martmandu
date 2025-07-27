@@ -29,13 +29,16 @@
 
             <div id="navbar-collapse-with-animation"
                  class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block">
-                <div class="overflow-hidden overflow-y-auto max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500">
-                    <div class="flex flex-col gap-x-0 mt-5 divide-y divide-dashed divide-gray-200 md:flex-row md:items-center md:justify-end md:gap-x-7 md:mt-0 md:ps-7 md:divide-y-0 md:divide-solid dark:divide-gray-700">
+                <div
+                    class="overflow-hidden overflow-y-auto max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500">
+                    <div
+                        class="flex flex-col gap-x-0 mt-5 divide-y divide-dashed divide-gray-200 md:flex-row md:items-center md:justify-end md:gap-x-7 md:mt-0 md:ps-7 md:divide-y-0 md:divide-solid dark:divide-gray-700">
                         @include('components.navLink', ['link'=> route('home'), 'name'=> 'Home'])
                         @include('components.navLink', ['link'=> route('categories'), 'name'=> 'Categories'])
                         @include('components.navLink', ['link'=> route('brands'), 'name'=> 'Brands'])
                         @include('components.navLink', ['link'=> route('products'), 'name'=> 'Products'])
-                        <a wire:navigate class="font-medium flex items-center {{request()->url() === route('cart') ? 'text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-600 ' : 'text-gray-500 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-500 ' }}   py-3 md:py-6   dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        <a wire:navigate
+                           class="font-medium flex items-center {{request()->url() === route('cart') ? 'text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-600 ' : 'text-gray-500 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-500 ' }}   py-3 md:py-6   dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                            href="{{route('cart')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="flex-shrink-0 w-5 h-5 mr-1">
@@ -43,10 +46,13 @@
                                       d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
                             </svg>
                             <span class="mr-1">Cart</span> <span
-                                    class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">4</span>
+                                class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">
+                                {{$cart_count}}
+                            </span>
                         </a>
                         <div class="pt-3 md:pt-0">
-                            <a wire:navigate class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            <a wire:navigate
+                               class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                href="{{route('login')}}">
                                 <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                      height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
