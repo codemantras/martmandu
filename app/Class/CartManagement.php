@@ -23,7 +23,7 @@ class CartManagement
         $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
             $cart_items[$product_key]['quantity'] = $quantity;
-            $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unite_price'];
+            $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unit_price'];
         } else {
             $product = Product::active()->where('id', $product_id)->first(['id', 'name', 'price', 'images']);
             if ($product) {
@@ -31,9 +31,9 @@ class CartManagement
                     'product_id' => $product->id,
                     'name' => $product->name,
                     'image' => $product->images[0] ?? null,
-                    'unite_price' => $product->price,
+                    'unit_price' => $product->price,
                     'quantity' => $quantity,
-                    'total_price' => $product->price,
+                    'total_price' => $product->price * $quantity,
                 ];
             }
         }
@@ -52,7 +52,7 @@ class CartManagement
         $cart_items = self::getCartItemsFromCookie();
         $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
-            $cart_items = Arr::except($cart_items, $product_key);
+            $cart_items = array_values(Arr::except($cart_items, $product_key));
         }
         self::addItemsToCookies($cart_items);
         return $cart_items;
@@ -100,7 +100,7 @@ class CartManagement
         $product_key = (new CartManagement)->getItemIndex($cart_items, $product_id);
         if ($product_key !== false) {
             $cart_items[$product_key]['quantity']++;
-            $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unite_price'];
+            $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unit_price'];
         }
         self::addItemsToCookies($cart_items);
         return $cart_items;
@@ -118,9 +118,9 @@ class CartManagement
         if ($product_key !== false) {
             if ($cart_items[$product_key]['quantity'] > 1) {
                 $cart_items[$product_key]['quantity']--;
-                $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unite_price'];
+                $cart_items[$product_key]['total_price'] = $cart_items[$product_key]['quantity'] * $cart_items[$product_key]['unit_price'];
             } else {
-                $cart_items = Arr::except($cart_items, $product_key);
+                $cart_items = array_values(Arr::except($cart_items, $product_key));
             }
         }
         self::addItemsToCookies($cart_items);

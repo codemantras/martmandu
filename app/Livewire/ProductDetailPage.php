@@ -74,8 +74,8 @@ class ProductDetailPage extends Component
 
     }
 
-    private function getProduct(string $product_slug): Product
-    {
-        return Product::where('slug', $this->slug)->firstOrFail();
-    }
+//    private function getProduct(string $product_slug): Product
+//    {
+//        return Product::where('slug', $this->slug)->firstOrFail();
+//    }
 }

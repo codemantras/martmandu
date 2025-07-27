@@ -27,7 +27,7 @@ class ProductsPage extends Component
     public bool $featured = false, $sale = false;
     #[Url]
     public int $price_range = 3000;
-    #{Url]
+    #[Url]
     public string $sort = 'latest';
 
     public function addProductToCart(int $product_id): void

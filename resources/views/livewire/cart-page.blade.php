@@ -24,7 +24,7 @@
                                         <span class="font-semibold">{{$item['name']}}</span>
                                     </div>
                                 </td>
-                                <td class="py-4">{{$item['unite_price']}}</td>
+                                <td class="py-4">{{$item['unit_price']}}</td>
                                 <td class="py-4">
                                     <div class="flex items-center">
                                         <button class="border rounded-md py-2 px-4 mr-2" wire:click.prevent="decreaseQuantity({{$item['product_id']}})">-</button>
